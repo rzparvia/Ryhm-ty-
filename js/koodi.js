@@ -1,5 +1,11 @@
+var baseurl = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
+
 var asemat = [];
 //ASEMIEN DATA TÄLLÄ PYYNNÖLLÄ
+var lahtoasema = "";
+var tuloasema = "";
+
+
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -89,7 +95,16 @@ for (var k = 0; k < asemat.length; ++k) {
     tuloOption.innerText = asemat[k];
     saapumisasemat.appendChild(tuloOption);
 }
-console.log(asemat);
 
+
+function haeData() {
+    lahtoasema = (document.getElementById("lahto").value + "/");
+    tuloasema = document.getElementById("tulo").value;
+    // xhr.open('get', baseurl + lahtoasema + tuloasema);
+    console.log(baseurl + lahtoasema + tuloasema);
+    // xhr.send();
+}
+
+haeData();
 
 
