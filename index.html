@@ -2,36 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
+    <title>Junahaku</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="js/ajax-utils.js"></script>
 </head>
 <body>
 
 <div class="haku">
 
-<h1>Juna-aikataulut</h1>
+    <h1>Juna-aikataulut</h1>
 
-<p>Lähtö</p>
-<input list="lahto">
+    <p>Lähtö</p>
+    <input type="text" list="lahto" id="lahtoasemat">
+    <datalist id="lahto">
+    </datalist>
 
-<datalist id="lahto">
-</datalist>
 
+    <p>Saapuminen</p>
 
-<p>Saapuminen</p>
-
-<input list="tulo">
-
-<datalist id="tulo">
-</datalist>
+    <input type="text" list="tulo" id="tuloasemat">
+    <datalist id="tulo">
+    </datalist>
 
     <div class="hakupainike">
 
-        <button class="button" type="button">Hae aikataulu</button>
+        <button class="button" type="button" onclick="haeData()">Hae aikataulu</button>
 
     </div>
 

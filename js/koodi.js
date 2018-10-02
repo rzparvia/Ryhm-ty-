@@ -1,6 +1,7 @@
 var baseurl = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
 
 var asemat = [];
+var lyhytkoodit = [];
 var lahtoasema = "";
 var tuloasema = "";
 
@@ -40,6 +41,7 @@ function filteroi(tulos) {
     for (var i = 0; i < tulos.length; ++i) {
         if (tulos[i].passengerTraffic === true) {
             console.log(tulos[i].stationName);
+            lyhytkoodit.push(tulos[i].stationShortCode);
             asemat.push(tulos[i].stationName);
         }
     }
@@ -48,7 +50,7 @@ function filteroi(tulos) {
 var valintalista = document.getElementById("lahto");
 for (var j = 0; j < asemat.length; ++j) {
     var lahtoOption = document.createElement("option");
-    lahtoOption.value = asemat[j];
+    lahtoOption.value = lyhytkoodit[j];
     lahtoOption.innerText = asemat[j];
     valintalista.appendChild(lahtoOption);
 }
@@ -56,20 +58,21 @@ for (var j = 0; j < asemat.length; ++j) {
 var saapumisasemat = document.getElementById("tulo");
 for (var k = 0; k < asemat.length; ++k) {
     var tuloOption = document.createElement("option");
-    tuloOption.value = asemat[k];
+    tuloOption.value = lyhytkoodit[k];
     tuloOption.innerText = asemat[k];
     saapumisasemat.appendChild(tuloOption);
 }
 
 
 function haeData() {
-    lahtoasema = (document.getElementById("lahto").value + "/");
-    tuloasema = document.getElementById("tulo").value;
-    // xhr.open('get', baseurl + lahtoasema + tuloasema);
-    console.log(baseurl + lahtoasema + tuloasema);
-    // xhr.send();
+    lahtoasema = document.getElementById("lahtoasemat").value + "/";
+    tuloasema = document.getElementById("tuloasemat").value;
+    var hakuURL = baseurl + lahtoasema + tuloasema;
+
+    $ajaxUtils.sendGetRequest(hakuURL, function (res) {
+        console.log(res);
+    });
 }
 
-haeData();
 
 
