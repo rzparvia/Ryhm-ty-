@@ -21,6 +21,7 @@ xhr.onreadystatechange = function () {
     }
 };
 haeAsemaData();
+haeKelloData();
 
 function haeAsemaData() {
     xhr.open('GET', 'https://rata.digitraffic.fi/api/v1/metadata/stations', false);
@@ -28,8 +29,13 @@ function haeAsemaData() {
     xhr.send(null);
 }
 
+function haeKelloData() {
+    xhr.open('GET', 'https://rata.digitraffic.fi/api/v1/trains/2018-10-02/1', false);
+    console.log('https://rata.digitraffic.fi/api/v1/trains/2018-10-02/1');
+    xhr.send(null);
+}
+
 function filteroi(tulos) {
-    var output = '';
     for (var i = 0; i < tulos.length; ++i) {
         if (tulos[i].passengerTraffic === true) {
             console.log(tulos[i].stationName);
