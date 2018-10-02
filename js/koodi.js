@@ -106,7 +106,7 @@ function haeData() {
     var hakuURL = baseurl + lahtoasema + tuloasema;
 
     $ajaxUtils.sendGetRequest(hakuURL, function (res) {
-        console.log(res);
+        ;
     });
 }
 
