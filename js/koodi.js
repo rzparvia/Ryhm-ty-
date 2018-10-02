@@ -1,11 +1,10 @@
-var baseurl = "https://rata.digitraffic.fi/api/v1";
-var loppuurl = "/live-trains/station/";
+var baseurl = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
 
 var asemat = [];
+var lahtoasema = "";
+var tuloasema = "";
 
-var lista = document.getElementById("lista"); // oikeasti siis tbody
 var xhr = new XMLHttpRequest();
-var nykyinenasema = '';
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
         if (xhr.status === 200) {
@@ -55,4 +54,15 @@ for (var k = 0; k < asemat.length; ++k) {
     saapumisasemat.appendChild(tuloOption);
 }
 
-console.log (asemat);
+
+function haeData() {
+    lahtoasema = (document.getElementById("lahto").value + "/");
+    tuloasema = document.getElementById("tulo").value;
+    // xhr.open('get', baseurl + lahtoasema + tuloasema);
+    console.log(baseurl + lahtoasema + tuloasema);
+    // xhr.send();
+}
+
+haeData();
+
+
