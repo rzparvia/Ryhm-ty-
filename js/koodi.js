@@ -8,7 +8,6 @@ var nykyinenasema = '';
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-            // Tehdään jotakin, pyyntö on valmis
             var tulos = JSON.parse(xhr.responseText);
             console.dir(tulos);
             filteroi(tulos);
@@ -36,3 +35,14 @@ function filteroi(tulos) {
         }
     }
 }
+
+function kellonAjat(tulos) {
+    for (var i = 0; i < tulos.length; ++i) {
+        var juna = tulos[i];
+
+
+
+    }
+}
+
+
