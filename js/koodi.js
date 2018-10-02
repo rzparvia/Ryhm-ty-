@@ -1,6 +1,7 @@
 var baseurl = "https://rata.digitraffic.fi/api/v1";
 var loppuurl = "/live-trains/station/";
 
+var asemat = [];
 
 var lista = document.getElementById("lista"); // oikeasti siis tbody
 var xhr = new XMLHttpRequest();
@@ -8,6 +9,7 @@ var nykyinenasema = '';
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
         if (xhr.status === 200) {
+            // Tehdään jotakin, pyyntö on valmis
             var tulos = JSON.parse(xhr.responseText);
             console.dir(tulos);
             filteroi(tulos);
@@ -32,17 +34,25 @@ function filteroi(tulos) {
     for (var i = 0; i < tulos.length; ++i) {
         if (tulos[i].passengerTraffic === true) {
             console.log(tulos[i].stationName);
+            asemat.push(tulos[i].stationName);
         }
     }
 }
 
-function kellonAjat(tulos) {
-    for (var i = 0; i < tulos.length; ++i) {
-        var juna = tulos[i];
-
-
-
-    }
+var valintalista = document.getElementById("lahto");
+for (var j = 0; j < asemat.length; ++j) {
+    var lahtoOption = document.createElement("option");
+    lahtoOption.value = asemat[j];
+    lahtoOption.innerText = asemat[j];
+    valintalista.appendChild(lahtoOption);
 }
 
+var saapumisasemat = document.getElementById("tulo");
+for (var k = 0; k < asemat.length; ++k) {
+    var tuloOption = document.createElement("option");
+    tuloOption.value = asemat[k];
+    tuloOption.innerText = asemat[k];
+    saapumisasemat.appendChild(tuloOption);
+}
 
+console.log (asemat);

@@ -1,5 +1,21 @@
+
+body {
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
 h1{
-    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
+}
+
+p {
+    font-size: .9em;
+    margin-bottom: 0;
+}
+
+.haku{
+    margin-bottom: 20px;
+
 }
 
 
@@ -7,13 +23,21 @@ h1{
     display: inline-grid;
     grid-template-columns: auto auto auto auto;
     grid-column-gap: 1px;
+    grid-row-gap: 1px;
+    border: 3px solid rgba(240, 255, 135, 0.8);
 }
+
 
 .grid-item {
     height: auto;
-    background-color: darkkhaki;
-    /*border: 1px solid rgba(255, 255, 255, 0.8);*/
+    background-color: rgb(240, 255, 135);
+    /*border: 1px solid rgba(255, 255, 255, 0.8); */
     font-family: 'Roboto', sans-serif;
     padding: 8px;
     font-size: 0.8em;
+}
+
+.grid-item:nth-of-type(8n+1), .grid-item:nth-of-type(8n+2),
+.grid-item:nth-of-type(8n+3), .grid-item:nth-of-type(8n+4) {
+    background-color: rgba(240, 255, 135, 0.5);
 }
