@@ -11,30 +11,101 @@
 </head>
 <body>
 
+<div class="haku"
+
+<h1>Juna-aikataulut</h1>
+
+<p>Lähtö</p>
+<input list="lahto">
+
+<datalist id="lahto">
+    <option value="Helsinki">
+    <option value="Lahti">
+    <option value="Tampere">
+    <option value="Oulu">
+</datalist>
+
+
+<p>Saapuminen</p>
+
+<input list="tulo">
+
+<datalist id="tulo">
+    <option value="Helsinki">
+    <option value="Lahti">
+    <option value="Tampere">
+    <option value="Oulu">
+</datalist>
+
+</div>
 
 <div class="grid-container">
     <div class="grid-item">9:00</div>
     <div class="grid-item">Helsinki</div>
-    <div class="grid-item">9:30:00</div>
+    <div class="grid-item">9:30</div>
     <div class="grid-item">Turku</div>
-</div>
-<div class="grid-container">
+
     <div class="grid-item">8:00</div>
     <div class="grid-item">Helsinki</div>
     <div class="grid-item">10:00</div>
     <div class="grid-item">Tampere</div>
-</div>
-<div class="grid-container">
+
+    <div class="grid-item">11:00</div>
+    <div class="grid-item">Helsinki</div>
+    <div class="grid-item">20:00</div>
+    <div class="grid-item">Oulu</div>
+
+    <div class="grid-item">11:00</div>
+    <div class="grid-item">Helsinki</div>
+    <div class="grid-item">20:00</div>
+    <div class="grid-item">Oulu</div>
+
     <div class="grid-item">11:00</div>
     <div class="grid-item">Helsinki</div>
     <div class="grid-item">20:00</div>
     <div class="grid-item">Oulu</div>
 </div>
 
-<script src="js/koodi.js">
+<script src="js/koodi.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!--<script>
+
+    $(document).ready(function(){
+
+    /*$(function() {
+        var wrapper = $("grid-container")
+
+        for (i = 0; i < 100; i++) {
+            wrapper.append("<span></span>");
+        }
+
+        $("body").append(wrapper);
+
+        color_rows();
+    });*/
+
+    function color_rows() {
+        $(".grid-item").each(function(i) {
+
+            if ((i + 1) % 4 < 4) {
+              $(this).css("background-color", "rgb(240, 255, 135, 0.5");
 
 
-</script>
+                }
+            });
+        }
+
+    color_rows();
+
+
+
+   ( "grid-item:nth-child(n+1)" ).css("background-color", "rgb(240, 255, 135, 0.5)")*/
+
+    });
+
+</script>-->
 
 </body>
 </html>
