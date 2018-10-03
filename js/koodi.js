@@ -14,6 +14,7 @@ xhr.onreadystatechange = function () {
         if (xhr.status === 200) {
             // Tehdään jotakin, pyyntö on valmis
             var tulos = JSON.parse(xhr.responseText);
+            console.log("Tämä on XHR tulos ");
             console.dir(tulos);
             filteroi(tulos);
 
@@ -40,7 +41,7 @@ xhr1.onreadystatechange = function () {
             // Tehdään jotakin, pyyntö on valmis
             var tulos = JSON.parse(xhr1.responseText);
             console.dir(tulos);
-            filteroiKello(tulos);
+            //filteroiKello(tulos);
 
         } else {
             alert("Pyyntö epäonnistui");
@@ -50,42 +51,55 @@ xhr1.onreadystatechange = function () {
     }
 };
 
-
 //AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
-
-function haeKelloData() {
-    function haePvm() {
-        var pvm = document.getElementById("pvm").value;
-    }
-    haePvm();
-    console.log(pvm);
+function haeJunienAikataulut() {
     var x = document.getElementById("lahtoasemat").value;
     var y = document.getElementById("tuloasemat").value;
+    var depdate = (document.getElementById("vu").value + "-"
+        + document.getElementById("pv").value + "-"
+        + document.getElementById("kk").value);
+    var depdateISO = (document.getElementById("vu").value + "-"
+        + document.getElementById("pv").value + "-"
+        + document.getElementById("kk").value + "T"
+        + document.getElementById("tun").value + ":"
+        + document.getElementById("min").value + ":00.000Z");
+
     if (x && y) {
-        xhr1.open('GET', 'https://rata.digitraffic.fi/api/v1/live-trains/station/' + x + "/" + y, false);
-        console.log('https://rata.digitraffic.fi/api/v1/live-trains/station/' + x + "/" + y);
+        //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=25 on että listataan 25 tulosta, saa muuttaa
+        xhr1.open('get', baseurl
+            + x + "/"
+            + y + '?departure_date='
+            + depdate + '&startDate='
+            + depdateISO + '&endDate=&limit=15', false);
+        console.log(baseurl
+            + x + "/"
+            + y + '?departure_date='
+            + depdate + '&startDate='
+            + depdateISO + '&endDate=&limit=15')
         xhr1.send(null);
     }
 }
 
-function filteroiKello(tulos) {
-    var optiot = {hour: '2-digit', minute: '2-digit', hour12: false};
-    for (var i = 0; i < tulos.length; ++i) {
-        for (var j = 0; j < tulos[i].timeTableRows.length; j++) {
-            if (tulos[i].timeTableRows[j].type === "DEPARTURE")
-                console.log("Lähtee asemalta ("
-                    + tulos[i].timeTableRows[j].stationShortCode
-                    + ") "
-                    + (new Date(tulos[i].timeTableRows[j].scheduledTime).toLocaleTimeString("fi", optiot)));
 
-        }
-    }
-}
+// function filteroiKello(tulos) {
+//     var optiot = {hour: '2-digit', minute: '2-digit', hour12: false};
+//     for (var i = 0; i < tulos.length; ++i) {
+//         for (var j = 0; j < tulos[i].timeTableRows.length; j++) {
+//             if (tulos[i].timeTableRows[j].type === "DEPARTURE")
+//                 console.log("Lähtee asemalta ("
+//                     + tulos[i].timeTableRows[j].stationShortCode
+//                     + ") "
+//                     + (new Date(tulos[i].timeTableRows[j].scheduledTime).toLocaleTimeString("fi", optiot)));
+//         }
+//
+//     }
+// }
+
 
 function filteroi(tulos) {
     for (var i = 0; i < tulos.length; ++i) {
         if (tulos[i].passengerTraffic === true) {
-            console.log(tulos[i].stationName);
+            //console.log(tulos[i].stationName);
             lyhytkoodit.push(tulos[i].stationShortCode);
             asemat.push(tulos[i].stationName);
         }
@@ -144,13 +158,25 @@ function kasitteleData(res) {
         var solut = [];
 
         // var junatunnussolu = document.createElement("div"); junatunnussolu.innerText = junatunnus; junatunnussolu.classList.add("grid-item"); solut.push(junatunnussolu);
-        var lahtoasemasolu =  document.createElement("div"); lahtoasemasolu.innerText = lahtoasema; lahtoasemasolu.classList.add("grid-item"); solut.push(lahtoasemasolu);
-        var lahteesolu = document.createElement("div"); lahteesolu.innerText = lahtoaika; lahteesolu.classList.add("grid-item"); solut.push(lahteesolu);
-        var perillasolu = document.createElement("div"); perillasolu.innerText = haettusaapumisaika; perillasolu.classList.add("grid-item"); solut.push(perillasolu);
-        var maaraasemasolu = document.createElement("div"); maaraasemasolu.innerText = tuloasema; maaraasemasolu.classList.add("grid-item"); solut.push(maaraasemasolu);
+        var lahtoasemasolu = document.createElement("div");
+        lahtoasemasolu.innerText = lahtoasema;
+        lahtoasemasolu.classList.add("grid-item");
+        solut.push(lahtoasemasolu);
+        var lahteesolu = document.createElement("div");
+        lahteesolu.innerText = lahtoaika;
+        lahteesolu.classList.add("grid-item");
+        solut.push(lahteesolu);
+        var perillasolu = document.createElement("div");
+        perillasolu.innerText = haettusaapumisaika;
+        perillasolu.classList.add("grid-item");
+        solut.push(perillasolu);
+        var maaraasemasolu = document.createElement("div");
+        maaraasemasolu.innerText = tuloasema;
+        maaraasemasolu.classList.add("grid-item");
+        solut.push(maaraasemasolu);
         // var perillalopullinentd = document.createElement("grid-item"); perillalopullinentd.innerText = saapumisaikalopullinen; solut.push(perillalopullinentd);
 
-        for(var l = 0 ; l < solut.length ; ++l) {
+        for (var l = 0; l < solut.length; ++l) {
             hakutulokset.appendChild(solut[l]);
         }
     }
