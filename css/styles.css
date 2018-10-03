@@ -34,7 +34,7 @@ p {
 
 .grid-container {
     display: inline-grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto;
     grid-column-gap: 1px;
     grid-row-gap: 1px;
     /*border: 3px solid rgba(244, 220, 66, 1);*/
@@ -53,6 +53,7 @@ p {
 }
 
 .grid-item:nth-of-type(8n+1), .grid-item:nth-of-type(8n+2),
-.grid-item:nth-of-type(8n+3), .grid-item:nth-of-type(8n+4) {
+.grid-item:nth-of-type(8n+3), .grid-item:nth-of-type(8n+4),
+.grid-item:nth-of-type(8n+5){
     background-color: rgba(244, 220, 66, 0.7);
 }
