@@ -6,7 +6,7 @@ var lyhytkoodit = [];
 
 var lahtoasema = "";
 var tuloasema = "";
-
+var hakutulokset = document.getElementById("hakutulokset");
 // Haetaan kaikki matkustajaliikenteen asemat ja luodaan niistä valintalistat
 haeAsemaData();
 
@@ -96,8 +96,9 @@ function haeData() {
 }
 
 function kasitteleData(res) {
-
-    var hakutulokset = document.getElementById("hakutulokset");
+    while (hakutulokset.firstChild) {
+        hakutulokset.removeChild(hakutulokset.firstChild);
+    }
     var optiot = {hour: '2-digit', minute: '2-digit', hour12: false};
     for (var i = 0; i < res.length; ++i) {
 
