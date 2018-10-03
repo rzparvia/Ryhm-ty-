@@ -49,14 +49,14 @@ xhr1.onreadystatechange = function () {
     }
 }
 
-
 //AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
 function haeJunienAikataulut() {
     var x = document.getElementById("lahtoasemat").value;
     var y = document.getElementById("tuloasemat").value;
+    var a = 20;
     var depY = document.getElementById("vu").value;
     if (depY < 2000) {
-        (2000 + depY);
+        depY = a + depY;
     }
     var depD = document.getElementById("pv").value;
     if (depD < 10) {
