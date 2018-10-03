@@ -38,7 +38,7 @@ xhr1.onreadystatechange = function () {
         if (xhr1.status === 200) {
             // Tehdään jotakin, pyyntö on valmis
             var tulos = JSON.parse(xhr1.responseText);
-            console.dir(tulos);
+
 
 
         } else {
@@ -47,22 +47,31 @@ xhr1.onreadystatechange = function () {
             document.getElementById("btn").style.visibility = "visible";
         }
     }
-};
-
-
-
 }
+
 
 //AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
 function haeJunienAikataulut() {
     var x = document.getElementById("lahtoasemat").value;
     var y = document.getElementById("tuloasemat").value;
-    var depdate = (document.getElementById("vu").value + "-"
-        + document.getElementById("pv").value + "-"
-        + document.getElementById("kk").value);
-    var depdateISO = (document.getElementById("vu").value + "-"
-        + document.getElementById("pv").value + "-"
-        + document.getElementById("kk").value + "T"
+    var depY = document.getElementById("vu").value;
+    if (depY < 2000) {
+        (2000 + depY);
+    }
+    var depD = document.getElementById("pv").value;
+    if (depD < 10) {
+        depD = "0" + depD;
+    }
+    var depM = document.getElementById("kk").value;
+    if (depM < 10) {
+        depM = "0" + depM;
+    }
+    var depdate = (depY + "-"
+        + depD + "-"
+        + depM);
+    var depdateISO = (depY + "-"
+        + depD + "-"
+        + depM + "T"
         + document.getElementById("tun").value + ":"
         + document.getElementById("min").value + ":00.000Z");
 
@@ -85,7 +94,6 @@ function haeJunienAikataulut() {
 function filteroiAsemat(tulos) {
     for (var i = 0; i < tulos.length; ++i) {
         if (tulos[i].passengerTraffic === true) {
-            console.log(tulos[i].stationName);
             lyhytkoodit.push(tulos[i].stationShortCode);
             asemat.push(tulos[i].stationName);
         }
@@ -97,70 +105,70 @@ function haeData() {
     tuloasema = document.getElementById("tuloasemat").value;
     var hakuURL = baseurl + lahtoasema + "/" + tuloasema;
 
-        $ajaxUtils.sendGetRequest(hakuURL, function (res) {
-            kasitteleData(res);
-        });
+    $ajaxUtils.sendGetRequest(hakuURL, function (res) {
+        kasitteleData(res);
+    });
+}
+
+function kasitteleData(res) {
+    while (hakutulokset.firstChild) {
+        hakutulokset.removeChild(hakutulokset.firstChild);
     }
+    var optiot = {hour: '2-digit', minute: '2-digit', hour12: false};
 
-    function kasitteleData(res) {
-        while (hakutulokset.firstChild) {
-            hakutulokset.removeChild(hakutulokset.firstChild);
-        }
-        var optiot = {hour: '2-digit', minute: '2-digit', hour12: false};
+    // Ilmoitetaan käyttäjälle ettei yhteyksiä ole, mikäli tulos palauttaa virheen.
 
-        // Ilmoitetaan käyttäjälle ettei yhteyksiä ole, mikäli tulos palauttaa virheen.
+    if (res.code === "TRAIN_NOT_FOUND") {
+        var eiYhteyksia = document.createElement("div");
+        eiYhteyksia.innerText = "Hakemiesi asemien välilä ei löytynyt suoria yhteyksiä.";
+        eiYhteyksia.classList.add("grid-item")
+        hakutulokset.appendChild(eiYhteyksia);
+    } else {
+        for (var i = 0; i < res.length; ++i) {
 
-        if (res.code === "TRAIN_NOT_FOUND") {
-            var eiYhteyksia = document.createElement("div");
-            eiYhteyksia.innerText = "Hakemiesi asemien välilä ei löytynyt suoria yhteyksiä.";
-            eiYhteyksia.classList.add("grid-item")
-            hakutulokset.appendChild(eiYhteyksia);
-        } else {
-            for (var i = 0; i < res.length; ++i) {
-
-                var juna = res[i];
-                var junatunnus = juna.trainType + juna.trainNumber;
+            var juna = res[i];
+            var junatunnus = juna.trainType + juna.trainNumber;
 
 
-                for (var indeksi = 0; indeksi < juna.timeTableRows.length; ++indeksi) {
-                    if (juna.timeTableRows[indeksi].stationShortCode === lahtoasema) {
-                        var lahtoaika = new Date(juna.timeTableRows[indeksi].scheduledTime).toLocaleTimeString("fi", optiot);
-                        break;
-                    }
+            for (var indeksi = 0; indeksi < juna.timeTableRows.length; ++indeksi) {
+                if (juna.timeTableRows[indeksi].stationShortCode === lahtoasema) {
+                    var lahtoaika = new Date(juna.timeTableRows[indeksi].scheduledTime).toLocaleTimeString("fi", optiot);
+                    break;
                 }
+            }
 
-                for (var ind = 1; ind < juna.timeTableRows.length; ++ind) {
-                    if (juna.timeTableRows[ind].stationShortCode === tuloasema) {
-                        var haettusaapumisaika = new Date(juna.timeTableRows[ind].scheduledTime).toLocaleTimeString("fi", optiot);
-                        break;
-                    }
+            for (var ind = 1; ind < juna.timeTableRows.length; ++ind) {
+                if (juna.timeTableRows[ind].stationShortCode === tuloasema) {
+                    var haettusaapumisaika = new Date(juna.timeTableRows[ind].scheduledTime).toLocaleTimeString("fi", optiot);
+                    break;
                 }
-                var solut = [];
+            }
+            var solut = [];
 
-                var junatunnussolu = document.createElement("div");
-                junatunnussolu.innerText = junatunnus;
-                junatunnussolu.classList.add("grid-item");
-                solut.push(junatunnussolu);
-                var lahtoasemasolu = document.createElement("div");
-                lahtoasemasolu.innerText = lahtoasema;
-                lahtoasemasolu.classList.add("grid-item");
-                solut.push(lahtoasemasolu);
-                var lahteesolu = document.createElement("div");
-                lahteesolu.innerText = lahtoaika;
-                lahteesolu.classList.add("grid-item");
-                solut.push(lahteesolu);
-                var maaraasemasolu = document.createElement("div");
-                maaraasemasolu.innerText = tuloasema;
-                maaraasemasolu.classList.add("grid-item");
-                solut.push(maaraasemasolu);
-                var perillasolu = document.createElement("div");
-                perillasolu.innerText = haettusaapumisaika;
-                perillasolu.classList.add("grid-item");
-                solut.push(perillasolu);
+            var junatunnussolu = document.createElement("div");
+            junatunnussolu.innerText = junatunnus;
+            junatunnussolu.classList.add("grid-item");
+            solut.push(junatunnussolu);
+            var lahtoasemasolu = document.createElement("div");
+            lahtoasemasolu.innerText = lahtoasema;
+            lahtoasemasolu.classList.add("grid-item");
+            solut.push(lahtoasemasolu);
+            var lahteesolu = document.createElement("div");
+            lahteesolu.innerText = lahtoaika;
+            lahteesolu.classList.add("grid-item");
+            solut.push(lahteesolu);
+            var maaraasemasolu = document.createElement("div");
+            maaraasemasolu.innerText = tuloasema;
+            maaraasemasolu.classList.add("grid-item");
+            solut.push(maaraasemasolu);
+            var perillasolu = document.createElement("div");
+            perillasolu.innerText = haettusaapumisaika;
+            perillasolu.classList.add("grid-item");
+            solut.push(perillasolu);
 
-                for (var l = 0; l < solut.length; ++l) {
-                    hakutulokset.appendChild(solut[l]);
-                }
+            for (var l = 0; l < solut.length; ++l) {
+                hakutulokset.appendChild(solut[l]);
             }
         }
     }
+}
