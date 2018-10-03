@@ -38,7 +38,7 @@ xhr1.onreadystatechange = function () {
         if (xhr1.status === 200) {
             // Tehdään jotakin, pyyntö on valmis
             var tulos = JSON.parse(xhr1.responseText);
-
+            console.dir(tulos);
 
 
         } else {
@@ -47,7 +47,7 @@ xhr1.onreadystatechange = function () {
             document.getElementById("btn").style.visibility = "visible";
         }
     }
-}
+};
 
 //AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
 function haeJunienAikataulut() {
@@ -77,7 +77,7 @@ function haeJunienAikataulut() {
 
     if (x && y) {
         //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=25 on että listataan 25 tulosta, saa muuttaa
-        xhr1.open('get', baseurl
+        xhr1.open('GET', baseurl
             + x + "/"
             + y + '?departure_date='
             + depdate + '&startDate='
@@ -86,10 +86,10 @@ function haeJunienAikataulut() {
             + x + "/"
             + y + '?departure_date='
             + depdate + '&startDate='
-            + depdateISO + '&endDate=&limit=15')
+            + depdateISO + '&endDate=&limit=15');
         xhr1.send(null);
     }
-}
+};
 
 function filteroiAsemat(tulos) {
     for (var i = 0; i < tulos.length; ++i) {
@@ -109,6 +109,8 @@ function haeData() {
         kasitteleData(res);
     });
 }
+
+
 
 function kasitteleData(res) {
     while (hakutulokset.firstChild) {
