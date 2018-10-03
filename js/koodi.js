@@ -39,7 +39,7 @@ xhr1.onreadystatechange = function () {
             // Tehdään jotakin, pyyntö on valmis
             var tulos = JSON.parse(xhr1.responseText);
             console.dir(tulos);
-            //filteroiKello(tulos);
+
 
         } else {
             alert("Pyyntö epäonnistui");
@@ -49,10 +49,16 @@ xhr1.onreadystatechange = function () {
     }
 };
 
+
+
+}
+
 //AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
 function haeJunienAikataulut() {
     var x = document.getElementById("lahtoasemat").value;
     var y = document.getElementById("tuloasemat").value;
+    var depY = document.getElementById("vu");
+    if depY
     var depdate = (document.getElementById("vu").value + "-"
         + document.getElementById("pv").value + "-"
         + document.getElementById("kk").value);
@@ -78,31 +84,6 @@ function haeJunienAikataulut() {
     }
 }
 
-function filteroiKello(tulos) {
-    var optiot = {hour: '2-digit', minute: '2-digit', hour12: false};
-    for (var i = 0; i < tulos.length; ++i) {
-        for (var j = 0; j < tulos[i].timeTableRows.length; j++) {
-            if (tulos[i].timeTableRows[j].type === "DEPARTURE")
-                console.log("Lähtee asemalta ("
-                    + tulos[i].timeTableRows[j].stationShortCode
-                    + ") "
-                    + (new Date(tulos[i].timeTableRows[j].scheduledTime).toLocaleTimeString("fi", optiot)));
-
-// function filteroiKello(tulos) {
-//     var optiot = {hour: '2-digit', minute: '2-digit', hour12: false};
-//     for (var i = 0; i < tulos.length; ++i) {
-//         for (var j = 0; j < tulos[i].timeTableRows.length; j++) {
-//             if (tulos[i].timeTableRows[j].type === "DEPARTURE")
-//                 console.log("Lähtee asemalta ("
-//                     + tulos[i].timeTableRows[j].stationShortCode
-//                     + ") "
-//                     + (new Date(tulos[i].timeTableRows[j].scheduledTime).toLocaleTimeString("fi", optiot)));
-//         }
-//
-//     }
-// }
-
-
 function filteroiAsemat(tulos) {
     for (var i = 0; i < tulos.length; ++i) {
         if (tulos[i].passengerTraffic === true) {
@@ -112,7 +93,6 @@ function filteroiAsemat(tulos) {
         }
     }
 }
-
 
 function haeData() {
     lahtoasema = document.getElementById("lahtoasemat").value;
@@ -160,7 +140,7 @@ function kasitteleData(res) {
             }
             var solut = [];
 
-             var junatunnussolu = document.createElement("div");
+            var junatunnussolu = document.createElement("div");
             junatunnussolu.innerText = junatunnus;
             junatunnussolu.classList.add("grid-item");
             solut.push(junatunnussolu);
@@ -187,8 +167,3 @@ function kasitteleData(res) {
         }
     }
 }
-
-
-
-
-
