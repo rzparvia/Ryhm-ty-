@@ -20,14 +20,20 @@ function haeAsemaData() {
             lahtoOption.value = lyhytkoodit[j];
             lahtoOption.innerText = asemat[j];
             valintalista.appendChild(lahtoOption);
+
+
+
         }
 
         var saapumisasemat = document.getElementById("tulo");
         for (var k = 0; k < asemat.length; ++k) {
             var tuloOption = document.createElement("option");
+
             tuloOption.value = lyhytkoodit[k];
             tuloOption.innerText = asemat[k];
+
             saapumisasemat.appendChild(tuloOption);
+
         }
     });
 }
@@ -158,6 +164,22 @@ function kasitteleData(res) {
         }
     }
 }
+
+
+function tallennaHaku(){
+
+
+    var input = document.getElementById('lahtoasemat').value;
+    localStorage.setItem('server', input);
+
+    var input = document.getElementById('saveServer').value;
+    localStorage.setItem('server', input);
+
+    //var hakuTulos = localStorage.setItem("lahto", hakutulos);
+    //console.log(hakuTulos);
+
+}
+
 
 
 
