@@ -111,7 +111,6 @@ function kasitteleData(res) {
 
             var juna = res[i];
             var junatunnus = juna.trainType + juna.trainNumber;
-            console.log(junatunnus);
 
 
             for (var indeksi = 0; indeksi < juna.timeTableRows.length; ++indeksi) {
