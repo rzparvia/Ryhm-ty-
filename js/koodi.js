@@ -101,14 +101,52 @@ for (var k = 0; k < asemat.length; ++k) {
 
 
 function haeData() {
-    lahtoasema = document.getElementById("lahtoasemat").value + "/";
+    lahtoasema = document.getElementById("lahtoasemat").value;
     tuloasema = document.getElementById("tuloasemat").value;
-    var hakuURL = baseurl + lahtoasema + tuloasema;
+    var hakuURL = baseurl + lahtoasema + "/" + tuloasema;
 
     $ajaxUtils.sendGetRequest(hakuURL, function (res) {
-        ;
+        kasitteleData(res);
     });
 }
+
+function kasitteleData(res) {
+
+    var hakutulokset = document.getElementById("hakutulokset");
+    var optiot = {hour: '2-digit', minute: '2-digit', hour12: false};
+    for (var i = 0; i < res.length; ++i) {
+
+        var juna = res[i];
+        var vikarivi = juna.timeTableRows[juna.timeTableRows.length - 1];
+
+        for (var indeksi = 0; indeksi < juna.timeTableRows.length; ++indeksi) {
+            if (juna.timeTableRows[indeksi].stationShortCode === lahtoasema) {
+                var lahtoaika = new Date(juna.timeTableRows[indeksi].scheduledTime).toLocaleTimeString("fi", optiot);
+                break;
+            }
+        }
+
+        for (var ind = 1; ind < juna.timeTableRows.length; ++ind) {
+            if (juna.timeTableRows[ind].stationShortCode === tuloasema) {
+                var haettusaapumisaika = new Date(juna.timeTableRows[ind].scheduledTime).toLocaleTimeString("fi", optiot);
+                break;
+            }
+        }
+        var solut = [];
+
+        // var junatunnustd = document.createElement("td"); junatunnustd.innerText = junatunnus; solut.push(junatunnustd);
+        var lahtoasemasolu =  document.createElement("div"); lahtoasemasolu.innerText = lahtoasema; lahtoasemasolu.classList.add("grid-item"); solut.push(lahtoasemasolu);
+        var lahteesolu = document.createElement("div"); lahteesolu.innerText = lahtoaika; lahteesolu.classList.add("grid-item"); solut.push(lahteesolu);
+        var perillasolu = document.createElement("div"); perillasolu.innerText = haettusaapumisaika; perillasolu.classList.add("grid-item"); solut.push(perillasolu);
+        var maaraasemasolu = document.createElement("div"); maaraasemasolu.innerText = tuloasema; maaraasemasolu.classList.add("grid-item"); solut.push(maaraasemasolu);
+        // var perillalopullinentd = document.createElement("grid-item"); perillalopullinentd.innerText = saapumisaikalopullinen; solut.push(perillalopullinentd);
+
+        for(var l = 0 ; l < solut.length ; ++l) {
+            hakutulokset.appendChild(solut[l]);
+        }
+    }
+}
+
 
 
 
