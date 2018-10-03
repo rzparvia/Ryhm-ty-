@@ -1,4 +1,3 @@
-//Alustetaan tärkeimmät muuttujat
 var baseurl = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
 
 var asemat = [];
@@ -40,7 +39,7 @@ xhr1.onreadystatechange = function () {
             // Tehdään jotakin, pyyntö on valmis
             var tulos = JSON.parse(xhr1.responseText);
             console.dir(tulos);
-            filteroiKello(tulos);
+            //filteroiKello(tulos);
 
         } else {
             alert("Pyyntö epäonnistui");
@@ -49,14 +48,34 @@ xhr1.onreadystatechange = function () {
         }
     }
 };
-haeKelloData();
 
 //AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
+function haeJunienAikataulut() {
+    var x = document.getElementById("lahtoasemat").value;
+    var y = document.getElementById("tuloasemat").value;
+    var depdate = (document.getElementById("vu").value + "-"
+        + document.getElementById("pv").value + "-"
+        + document.getElementById("kk").value);
+    var depdateISO = (document.getElementById("vu").value + "-"
+        + document.getElementById("pv").value + "-"
+        + document.getElementById("kk").value + "T"
+        + document.getElementById("tun").value + ":"
+        + document.getElementById("min").value + ":00.000Z");
 
-function haeKelloData() {
-    xhr1.open('GET', 'https://rata.digitraffic.fi/api/v1/trains/2018-10-02/1', false);
-    console.log('https://rata.digitraffic.fi/api/v1/trains/2018-10-02/1');
-    xhr1.send(null);
+    if (x && y) {
+        //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=25 on että listataan 25 tulosta, saa muuttaa
+        xhr1.open('get', baseurl
+            + x + "/"
+            + y + '?departure_date='
+            + depdate + '&startDate='
+            + depdateISO + '&endDate=&limit=15', false);
+        console.log(baseurl
+            + x + "/"
+            + y + '?departure_date='
+            + depdate + '&startDate='
+            + depdateISO + '&endDate=&limit=15')
+        xhr1.send(null);
+    }
 }
 
 function filteroiKello(tulos) {
@@ -69,13 +88,25 @@ function filteroiKello(tulos) {
                     + ") "
                     + (new Date(tulos[i].timeTableRows[j].scheduledTime).toLocaleTimeString("fi", optiot)));
 
-        }
-    }
-}
+// function filteroiKello(tulos) {
+//     var optiot = {hour: '2-digit', minute: '2-digit', hour12: false};
+//     for (var i = 0; i < tulos.length; ++i) {
+//         for (var j = 0; j < tulos[i].timeTableRows.length; j++) {
+//             if (tulos[i].timeTableRows[j].type === "DEPARTURE")
+//                 console.log("Lähtee asemalta ("
+//                     + tulos[i].timeTableRows[j].stationShortCode
+//                     + ") "
+//                     + (new Date(tulos[i].timeTableRows[j].scheduledTime).toLocaleTimeString("fi", optiot)));
+//         }
+//
+//     }
+// }
+
 
 function filteroiAsemat(tulos) {
     for (var i = 0; i < tulos.length; ++i) {
         if (tulos[i].passengerTraffic === true) {
+            console.log(tulos[i].stationName);
             lyhytkoodit.push(tulos[i].stationShortCode);
             asemat.push(tulos[i].stationName);
         }
