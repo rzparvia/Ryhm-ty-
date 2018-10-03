@@ -39,6 +39,7 @@
         <button class="button" type="button" onclick="haeJunienAikataulut()">Hae aikataulu</button>
 
     </div>
+    <div id="mapholder">Demo</div>
 
 
 </div>
@@ -48,7 +49,21 @@
 </div>
 
 <script src="js/koodi.js"></script>
+<script>
+    var x = document.getElementById("demo");
+    navigator.geolocation.getCurrentPosition(function (loc) {
+            var latlon = loc.coords.latitude + "," + loc.coords.longitude;
 
+            var img_url= "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latlon+"&rankby=distance&type=train_station&key=AIzaSyALL-7LpZ0VywaccFc9kZndHfDZItIVVVI";
+            //var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyBcpL9Qwk65_bC7CUbenuICJAb4DrsRy5c";
+
+            document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+        }, function (errordata) {
+        console.log("Virhe:" + errordata.message);
+        },
+        { enableHighAccuracy: true});
+
+</script>
 <!--<script>
 
     $(document).ready(function(){
