@@ -3,11 +3,11 @@ var baseurl = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
 var asemat = [];
 var lyhytkoodit = [];
 
-//ASEMIEN DATA TÄLLÄ PYYNNÖLLÄ
+
 var lahtoasema = "";
 var tuloasema = "";
 
-
+//ASEMIEN DATA TÄLLÄ PYYNNÖLLÄ
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -27,8 +27,8 @@ xhr.onreadystatechange = function () {
 haeAsemaData();
 
 function haeAsemaData() {
-    xhr.open('GET', 'https://rata.digitraffic.fi/api/v1/metadata/stations', false);
-    console.log('https://rata.digitraffic.fi/api/v1/metadata/stations');
+    xhr.open('GET', 'https://rata.digitraffic.fi/api/v1/metadata/stations/', false);
+    console.log('https://rata.digitraffic.fi/api/v1/metadata/stations/');
     xhr.send(null);
 }
 
@@ -49,14 +49,23 @@ xhr1.onreadystatechange = function () {
         }
     }
 };
-haeKelloData();
+
 
 //AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
 
 function haeKelloData() {
-    xhr1.open('GET', 'https://rata.digitraffic.fi/api/v1/trains/2018-10-02/1', false);
-    console.log('https://rata.digitraffic.fi/api/v1/trains/2018-10-02/1');
-    xhr1.send(null);
+    function haePvm() {
+        var pvm = document.getElementById("pvm").value;
+    }
+    haePvm();
+    console.log(pvm);
+    var x = document.getElementById("lahtoasemat").value;
+    var y = document.getElementById("tuloasemat").value;
+    if (x && y) {
+        xhr1.open('GET', 'https://rata.digitraffic.fi/api/v1/live-trains/station/' + x + "/" + y, false);
+        console.log('https://rata.digitraffic.fi/api/v1/live-trains/station/' + x + "/" + y);
+        xhr1.send(null);
+    }
 }
 
 function filteroiKello(tulos) {
