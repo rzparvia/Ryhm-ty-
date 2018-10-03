@@ -102,7 +102,9 @@ function kasitteleData(res) {
     for (var i = 0; i < res.length; ++i) {
 
         var juna = res[i];
-        var vikarivi = juna.timeTableRows[juna.timeTableRows.length - 1];
+        var junatunnus = juna.trainType + juna.trainNumber;
+        console.log(junatunnus);
+
 
         for (var indeksi = 0; indeksi < juna.timeTableRows.length; ++indeksi) {
             if (juna.timeTableRows[indeksi].stationShortCode === lahtoasema) {
@@ -117,9 +119,20 @@ function kasitteleData(res) {
                 break;
             }
         }
+
+
+
+
+
+
+
         var solut = [];
 
         // var junatunnussolu = document.createElement("div"); junatunnussolu.innerText = junatunnus; junatunnussolu.classList.add("grid-item"); solut.push(junatunnussolu);
+        var junatunnussolu = document.createElement("div");
+        junatunnussolu.innerText = junatunnus;
+        junatunnussolu.classList.add("grid-item");
+        solut.push(junatunnussolu);
         var lahtoasemasolu = document.createElement("div");
         lahtoasemasolu.innerText = lahtoasema;
         lahtoasemasolu.classList.add("grid-item");
@@ -128,14 +141,15 @@ function kasitteleData(res) {
         lahteesolu.innerText = lahtoaika;
         lahteesolu.classList.add("grid-item");
         solut.push(lahteesolu);
-        var perillasolu = document.createElement("div");
-        perillasolu.innerText = haettusaapumisaika;
-        perillasolu.classList.add("grid-item");
-        solut.push(perillasolu);
         var maaraasemasolu = document.createElement("div");
         maaraasemasolu.innerText = tuloasema;
         maaraasemasolu.classList.add("grid-item");
         solut.push(maaraasemasolu);
+        var perillasolu = document.createElement("div");
+        perillasolu.innerText = haettusaapumisaika;
+        perillasolu.classList.add("grid-item");
+        solut.push(perillasolu);
+
         // var perillalopullinentd = document.createElement("grid-item"); perillalopullinentd.innerText = saapumisaikalopullinen; solut.push(perillalopullinentd);
 
         for (var l = 0; l < solut.length; ++l) {
