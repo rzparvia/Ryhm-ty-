@@ -69,6 +69,27 @@ function filteroiAsemat(tulos) {
 // }
 //AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
 function haeJunienAikataulut() {
+    var x = document.getElementById("lahtoasemat").value;
+    var y = document.getElementById("tuloasemat").value;
+    var a = 20;
+    var depY = document.getElementById("vu").value;
+    if (depY < 2000) {
+        depY = a + depY;
+    }
+    var depD = document.getElementById("pv").value;
+    if (depD < 10) {
+        depD = "0" + depD;
+    }
+    var depM = document.getElementById("kk").value;
+    if (depM < 10) {
+        depM = "0" + depM;
+    }
+    var depdate = (depY + "-"
+        + depD + "-"
+        + depM);
+    var depdateISO = (depY + "-"
+        + depD + "-"
+        + depM + "T"
 
     lahtoasema = document.getElementById("lahtoasemat").value;
     tuloasema = document.getElementById("tuloasemat").value;
@@ -97,6 +118,21 @@ console.log("depiso", depdateISO);
 // "https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?departure_date=2018-10-05&startDate=2018-10-05T13%3A09%3A37.000Z&limit=15"
       //  "https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?startDate=2018-10-05T13%3A09%3A37.889Z&limit=15"
 
+    if (x && y) {
+        //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=25 on että listataan 25 tulosta, saa muuttaa
+        xhr1.open('GET', baseurl
+            + x + "/"
+            + y + '?departure_date='
+            + depdate + '&startDate='
+            + depdateISO + '&endDate=&limit=15', false);
+        console.log(baseurl
+            + x + "/"
+            + y + '?departure_date='
+            + depdate + '&startDate='
+            + depdateISO + '&endDate=&limit=15');
+        xhr1.send(null);
+    }
+};
 
 
 
@@ -107,6 +143,8 @@ console.log("depiso", depdateISO);
     });
 }
 // https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPENaN2018-04-10&include_nonstopping=false&startDate=2018-04-10T16:00:00.000Z=&limit=15
+
+
 
 function kasitteleData(res) {
     while (hakutulokset.firstChild) {
@@ -125,7 +163,6 @@ function kasitteleData(res) {
         for (var i = 0; i < res.length; ++i) {
 
             var juna = res[i];
-            console.log(juna);
             var junatunnus = juna.trainType + juna.trainNumber;
 
 
