@@ -134,7 +134,7 @@ function kasitteleData(res) {
         }
         var solut = [];
 
-        // var junatunnustd = document.createElement("td"); junatunnustd.innerText = junatunnus; solut.push(junatunnustd);
+        // var junatunnussolu = document.createElement("div"); junatunnussolu.innerText = junatunnus; junatunnussolu.classList.add("grid-item"); solut.push(junatunnussolu);
         var lahtoasemasolu =  document.createElement("div"); lahtoasemasolu.innerText = lahtoasema; lahtoasemasolu.classList.add("grid-item"); solut.push(lahtoasemasolu);
         var lahteesolu = document.createElement("div"); lahteesolu.innerText = lahtoaika; lahteesolu.classList.add("grid-item"); solut.push(lahteesolu);
         var perillasolu = document.createElement("div"); perillasolu.innerText = haettusaapumisaika; perillasolu.classList.add("grid-item"); solut.push(perillasolu);
