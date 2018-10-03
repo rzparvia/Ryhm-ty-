@@ -111,15 +111,17 @@ function kasitteleData(res) {
     } else {
         for (var i = 0; i < res.length; ++i) {
 
-            var juna = res[i];
-            var vikarivi = juna.timeTableRows[juna.timeTableRows.length - 1];
+        var juna = res[i];
+        var junatunnus = juna.trainType + juna.trainNumber;
+        console.log(junatunnus);
 
-            for (var indeksi = 0; indeksi < juna.timeTableRows.length; ++indeksi) {
-                if (juna.timeTableRows[indeksi].stationShortCode === lahtoasema) {
-                    var lahtoaika = new Date(juna.timeTableRows[indeksi].scheduledTime).toLocaleTimeString("fi", optiot);
-                    break;
-                }
+
+        for (var indeksi = 0; indeksi < juna.timeTableRows.length; ++indeksi) {
+            if (juna.timeTableRows[indeksi].stationShortCode === lahtoasema) {
+                var lahtoaika = new Date(juna.timeTableRows[indeksi].scheduledTime).toLocaleTimeString("fi", optiot);
+                break;
             }
+        }
 
             for (var ind = 1; ind < juna.timeTableRows.length; ++ind) {
                 if (juna.timeTableRows[ind].stationShortCode === tuloasema) {
@@ -147,6 +149,29 @@ function kasitteleData(res) {
             maaraasemasolu.classList.add("grid-item");
             solut.push(maaraasemasolu);
             // var perillalopullinentd = document.createElement("grid-item"); perillalopullinentd.innerText = saapumisaikalopullinen; solut.push(perillalopullinentd);
+        // var junatunnussolu = document.createElement("div"); junatunnussolu.innerText = junatunnus; junatunnussolu.classList.add("grid-item"); solut.push(junatunnussolu);
+        var junatunnussolu = document.createElement("div");
+        junatunnussolu.innerText = junatunnus;
+        junatunnussolu.classList.add("grid-item");
+        solut.push(junatunnussolu);
+        var lahtoasemasolu = document.createElement("div");
+        lahtoasemasolu.innerText = lahtoasema;
+        lahtoasemasolu.classList.add("grid-item");
+        solut.push(lahtoasemasolu);
+        var lahteesolu = document.createElement("div");
+        lahteesolu.innerText = lahtoaika;
+        lahteesolu.classList.add("grid-item");
+        solut.push(lahteesolu);
+        var maaraasemasolu = document.createElement("div");
+        maaraasemasolu.innerText = tuloasema;
+        maaraasemasolu.classList.add("grid-item");
+        solut.push(maaraasemasolu);
+        var perillasolu = document.createElement("div");
+        perillasolu.innerText = haettusaapumisaika;
+        perillasolu.classList.add("grid-item");
+        solut.push(perillasolu);
+
+        // var perillalopullinentd = document.createElement("grid-item"); perillalopullinentd.innerText = saapumisaikalopullinen; solut.push(perillalopullinentd);
 
             for (var l = 0; l < solut.length; ++l) {
                 hakutulokset.appendChild(solut[l]);

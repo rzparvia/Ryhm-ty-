@@ -52,8 +52,8 @@ p {
     font-size: 0.8em;
 }
 
-.grid-item:nth-of-type(8n+1), .grid-item:nth-of-type(8n+2),
-.grid-item:nth-of-type(8n+3), .grid-item:nth-of-type(8n+4),
-.grid-item:nth-of-type(8n+5){
+.grid-item:nth-of-type(10n+1), .grid-item:nth-of-type(10n+2),
+.grid-item:nth-of-type(10n+3), .grid-item:nth-of-type(10n+4),
+.grid-item:nth-of-type(10n+5){
     background-color: rgba(244, 220, 66, 0.7);
 }
