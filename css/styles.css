@@ -37,7 +37,8 @@ p {
     grid-template-columns: auto auto auto auto;
     grid-column-gap: 1px;
     grid-row-gap: 1px;
-    border: 3px solid rgba(244, 220, 66, 1);
+    /*border: 3px solid rgba(244, 220, 66, 1);*/
+    padding: 3px;
 }
 
 
