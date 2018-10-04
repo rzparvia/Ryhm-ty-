@@ -1,3 +1,4 @@
+//Alustetaan tärkeimmät muuttujat
 var baseurl = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
 
 var asemat = [];
@@ -175,3 +176,8 @@ function kasitteleData(res) {
         }
     }
 }
+
+
+
+
+
