@@ -32,6 +32,15 @@ function haeAsemaData() {
     });
 }
 
+function filteroiAsemat(tulos) {
+    for (var i = 0; i < tulos.length; ++i) {
+        if (tulos[i].passengerTraffic === true) {
+            lyhytkoodit.push(tulos[i].stationShortCode);
+            asemat.push(tulos[i].stationName);
+        }
+    }
+}
+
 //JUNIEN KELLONAJAT TÄLLÄ PYYNNÖLLÄ
 var xhr1 = new XMLHttpRequest();
 xhr1.onreadystatechange = function () {
@@ -40,23 +49,22 @@ xhr1.onreadystatechange = function () {
             // Tehdään jotakin, pyyntö on valmis
             var tulos = JSON.parse(xhr1.responseText);
             console.dir(tulos);
-
+            kasitteleData(tulos);
 
         } else {
             alert("Pyyntö epäonnistui");
-            document.getElementById("hae").innerText = "Hae data uudestaan painamalla nappulaa:";
-            document.getElementById("btn").style.visibility = "visible";
+
         }
     }
 };
 
 //AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
 function haeJunienAikataulut() {
-    var lahtoasema = document.getElementById("lahtoasemat").value;
-    var tuloasema = document.getElementById("tuloasemat").value;
+    lahtoasema = document.getElementById("lahtoasemat").value;
+    tuloasema = document.getElementById("tuloasemat").value;
     var lahtopaiva = document.getElementById("datepricker").value;
     var lahtoaika = document.getElementById("timepricker").value;
-    var lahtoaikaISO = lahtopaiva+"T"+lahtoaika+":00.000Z";
+    var lahtoaikaISO = lahtopaiva + "T" + lahtoaika + ":00.000Z";
 
     if (lahtoasema && tuloasema) {
         //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=15 on että listataan 15 tulosta, saa muuttaa
@@ -74,27 +82,6 @@ function haeJunienAikataulut() {
         xhr1.send(null);
     }
 }
-
-function filteroiAsemat(tulos) {
-    for (var i = 0; i < tulos.length; ++i) {
-        if (tulos[i].passengerTraffic === true) {
-            lyhytkoodit.push(tulos[i].stationShortCode);
-            asemat.push(tulos[i].stationName);
-        }
-    }
-}
-
-function haeData() {
-    lahtoasema = document.getElementById("lahtoasemat").value;
-    tuloasema = document.getElementById("tuloasemat").value;
-    var hakuURL = baseurl + lahtoasema + "/" + tuloasema;
-
-    $ajaxUtils.sendGetRequest(hakuURL, function (res) {
-        kasitteleData(res);
-    });
-}
-
-
 
 function kasitteleData(res) {
     while (hakutulokset.firstChild) {

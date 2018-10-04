@@ -41,9 +41,9 @@
 
         <div class="hakupainike">
 
-            <button class="button" type="button" onclick="haeJunienAikataulut()">Hae aikataulu</button>
+                <button class="button" type="button" onclick="haeJunienAikataulut()">Hae aikataulu</button>
 
-        </div>
+            </div>
 
 
 
@@ -70,7 +70,7 @@
 
             document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
         }, function (errordata) {
-        console.log("Virhe:" + errordata.message);
+            console.log("Virhe:" + errordata.message);
         },
         { enableHighAccuracy: true});
 
