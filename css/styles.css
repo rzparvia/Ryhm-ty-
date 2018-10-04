@@ -1,8 +1,26 @@
-
 body {
     background-color: white;
     font-family: 'Roboto', sans-serif;
-    background-color: rgba(244, 220, 66, 0.3)
+    background-color: rgba(244, 220, 66, 0.3);
+    background: url(../img/tausta.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 30px;
+
+}
+
+.content{
+    display: flex;
 }
 
 h1{
@@ -17,6 +35,7 @@ p {
 .haku{
     margin-bottom: 20px;
 
+
 }
 
 .button{
@@ -28,6 +47,7 @@ p {
     text-align: center;
     text-decoration: none;
     font-size: .9em;
+    border-radius: 7px;
 
 }
 
@@ -39,6 +59,7 @@ p {
     grid-row-gap: 1px;
     /*border: 3px solid rgba(244, 220, 66, 1);*/
     padding: 3px;
+    width: 400px;
 }
 
 
@@ -56,4 +77,10 @@ p {
 .grid-item:nth-of-type(10n+3), .grid-item:nth-of-type(10n+4),
 .grid-item:nth-of-type(10n+5){
     background-color: rgba(244, 220, 66, 0.7);
+}
+
+#mapholder{
+    width:300px;
+    height:300px;
+
 }

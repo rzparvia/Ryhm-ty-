@@ -7,45 +7,53 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="js/ajax-utils.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
 
-<div class="haku">
+<div class="container">
 
-    <h1>Juna-aikataulut</h1>
+    <header><h1>Juna-aikataulut</h1></header>
 
-    <p>Lähtö</p>
-    <input type="text" list="lahto" id="lahtoasemat">
-    <datalist id="lahto">
-    </datalist>
+    <div class="content">
 
 
-    <p>Saapuminen</p>
+        <div class="haku">
 
-    <input type="text" list="tulo" id="tuloasemat">
-    <datalist id="tulo">
-    </datalist>
+            <p>Date: <input type="date" id="datepricker"></p>
+            <p>Time: <input type="time" id="timepricker"></p>
 
-    <p>Päivä <br><input type="text" id="pv"></p>
-    <p>Kuukausi<br><input type="text" id="kk"></p>
-    <p>Vuosi<br><input type="text" id="vu"></p>
+            <p>Lähtöasema</p>
+            <input type="text" list="lahto" id="lahtoasemat">
+            <datalist id="lahto">
+            </datalist>
 
 
-    <p>Tunti<br><input type="text" id="tun"></p>
-    <p>Min<br><input type="text" id="min"></p>
-<!--asdasdasd-->
-    <div class="hakupainike">
+            <p>Tuloasema</p>
 
-        <button class="button" type="button" onclick="haeJunienAikataulut()">Hae aikataulu</button>
+            <input type="text" list="tulo" id="tuloasemat">
+            <datalist id="tulo">
+            </datalist>
+
+            <div class="hakupainike">
+
+                <button class="button" type="button" onclick="haeJunienAikataulut()">Hae aikataulu</button>
+
+            </div>
+
+
+
+        </div>
+
+
+        <div class="grid-container" id="hakutulokset">
+        </div>
+
+        <div id="mapholder">Demo</div>
 
     </div>
-    <div id="mapholder">Demo</div>
 
-
-</div>
-
-
-<div class="grid-container" id="hakutulokset">
 </div>
 
 <script src="js/koodi.js"></script>
@@ -59,47 +67,23 @@
 
             document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
         }, function (errordata) {
-        console.log("Virhe:" + errordata.message);
+            console.log("Virhe:" + errordata.message);
         },
         { enableHighAccuracy: true});
 
 </script>
-<!--<script>
+<script>
 
     $(document).ready(function(){
 
-    /*$(function() {
-        var wrapper = $("grid-container")
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
 
-        for (i = 0; i < 100; i++) {
-            wrapper.append("<span></span>");
-        }
-
-        $("body").append(wrapper);
-
-        color_rows();
-    });*/
-
-    function color_rows() {
-        $(".grid-item").each(function(i) {
-
-            if ((i + 1) % 4 < 4) {
-              $(this).css("background-color", "rgb(240, 255, 135, 0.5");
-
-
-                }
-            });
-        }
-
-    color_rows();
-
-
-
-   ( "grid-item:nth-child(n+1)" ).css("background-color", "rgb(240, 255, 135, 0.5)")*/
 
     });
 
-</script>-->
+</script>
 
 </body>
 </html>

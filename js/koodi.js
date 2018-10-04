@@ -1,3 +1,4 @@
+//Alustetaan tärkeimmät muuttujat
 var baseurl = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
 
 var asemat = [];
@@ -7,7 +8,6 @@ var lahtoasema = "";
 var tuloasema = "";
 var hakutulokset = document.getElementById("hakutulokset");
 // Haetaan kaikki matkustajaliikenteen asemat ja luodaan niistä valintalistat
-
 haeAsemaData();
 
 function haeAsemaData() {
@@ -40,109 +40,48 @@ function filteroiAsemat(tulos) {
         }
     }
 }
+
 //JUNIEN KELLONAJAT TÄLLÄ PYYNNÖLLÄ
-// var xhr1 = new XMLHttpRequest();
-// xhr1.onreadystatechange = function () {
-//     if (xhr1.readyState === 4) {
-//         if (xhr1.status === 200) {
-//             // Tehdään jotakin, pyyntö on valmis
-//             var tulos = JSON.parse(xhr1.responseText);
-//             console.dir(tulos);
-//             //filteroiKello(tulos);
-//
-//         } else {
-//             alert("Pyyntö epäonnistui");
-//             document.getElementById("hae").innerText = "Hae data uudestaan painamalla nappulaa:";
-//             document.getElementById("btn").style.visibility = "visible";
-//         }
-//     }
-// };
+var xhr1 = new XMLHttpRequest();
+xhr1.onreadystatechange = function () {
+    if (xhr1.readyState === 4) {
+        if (xhr1.status === 200) {
+            // Tehdään jotakin, pyyntö on valmis
+            var tulos = JSON.parse(xhr1.responseText);
+            console.dir(tulos);
+            kasitteleData(tulos);
 
-// function haeData() {
-//     lahtoasema = document.getElementById("lahtoasemat").value;
-//     tuloasema = document.getElementById("tuloasemat").value;
-//     var hakuURL = baseurl + lahtoasema + "/" + tuloasema;
-//
-//     $ajaxUtils.sendGetRequest(hakuURL, function (res) {
-//         kasitteleData(res);
-//     });
-// }
-//AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
-function haeJunienAikataulut() {
-    var x = document.getElementById("lahtoasemat").value;
-    var y = document.getElementById("tuloasemat").value;
-    var a = 20;
-    var depY = document.getElementById("vu").value;
-    if (depY < 2000) {
-        depY = a + depY;
-    }
-    var depD = document.getElementById("pv").value;
-    if (depD < 10) {
-        depD = "0" + depD;
-    }
-    var depM = document.getElementById("kk").value;
-    if (depM < 10) {
-        depM = "0" + depM;
-    }
-    var depdate = (depY + "-"
-        + depD + "-"
-        + depM);
-    var depdateISO = (depY + "-"
-        + depD + "-"
-        + depM + "T"
+        } else {
+            alert("Pyyntö epäonnistui");
 
-    lahtoasema = document.getElementById("lahtoasemat").value;
-    tuloasema = document.getElementById("tuloasemat").value;
-    var depdate = (document.getElementById("vu").value + "-"
-        + document.getElementById("pv").value + "-"
-        + document.getElementById("kk").value);
-    var depdateISO = (document.getElementById("vu").value + "-"
-        + document.getElementById("pv").value + "-"
-        + document.getElementById("kk").value + "T"
-        + document.getElementById("tun").value + ":"
-        + document.getElementById("min").value + ":00.000Z");
-
-    console.log(depdate);
-console.log("depiso", depdateISO);
-    //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=25 on että listataan 25 tulosta, saa muuttaa
-    var hakuURL = baseurl
-        + lahtoasema
-        + "/"
-        + tuloasema
-        + "?departure_date=" +
-        + depdate +
-        '&startDate=' +
-        + depdateISO + '&limit=15';
-    console.log("hakuurl", hakuURL);
-
-// "https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?departure_date=2018-10-05&startDate=2018-10-05T13%3A09%3A37.000Z&limit=15"
-      //  "https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?startDate=2018-10-05T13%3A09%3A37.889Z&limit=15"
-
-    if (x && y) {
-        //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=25 on että listataan 25 tulosta, saa muuttaa
-        xhr1.open('GET', baseurl
-            + x + "/"
-            + y + '?departure_date='
-            + depdate + '&startDate='
-            + depdateISO + '&endDate=&limit=15', false);
-        console.log(baseurl
-            + x + "/"
-            + y + '?departure_date='
-            + depdate + '&startDate='
-            + depdateISO + '&endDate=&limit=15');
-        xhr1.send(null);
+        }
     }
 };
 
+//AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
+function haeJunienAikataulut() {
+    lahtoasema = document.getElementById("lahtoasemat").value;
+    tuloasema = document.getElementById("tuloasemat").value;
+    var lahtopaiva = document.getElementById("datepricker").value;
+    var lahtoaika = document.getElementById("timepricker").value;
+    var lahtoaikaISO = lahtopaiva + "T" + lahtoaika + ":00.000Z";
 
-
-    $ajaxUtils.sendGetRequest(hakuURL, function (res) {
-        console.log(hakuURL);
-        console.log(res);
-        kasitteleData(res);
-    });
-}
-// https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPENaN2018-04-10&include_nonstopping=false&startDate=2018-04-10T16:00:00.000Z=&limit=15
+    if (lahtoasema && tuloasema) {
+        //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=15 on että listataan 15 tulosta, saa muuttaa
+        xhr1.open('GET', baseurl
+            + lahtoasema + "/"
+            + tuloasema + '?departure_date='
+            + '&startDate='
+            + lahtoaikaISO + '&endDate=&limit=15', false);
+        // TÄSSÄ TULOSTETAAN KONSOLIIN KASAAN PARSITUN URLIN LINKKI
+        console.log(baseurl
+            + lahtoasema + "/"
+            + tuloasema + '?departure_date='
+            + '&startDate='
+            + lahtoaikaISO + '&endDate=&limit=15');
+        xhr1.send(null);
+    }
+};
 
 
 
@@ -208,8 +147,6 @@ function kasitteleData(res) {
         }
     }
 }
-
-
 
 
 
