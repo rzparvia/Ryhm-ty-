@@ -70,13 +70,21 @@ function haeJunienAikataulut() {
     var tunnit = parseInt(tunnitString, 10);
     var minuutitString = lahtoaika.substr(3,2);
     tunnit -= 3;
+
+    if (tunnit === -1) {
+        tunnit = 23;
+    }
+    if (tunnit === -2) {
+        tunnit = 22;
+    }
+    if (tunnit === -3) {
+        tunnit = 21;
+    }
     if (tunnit < 10) {
         tunnit = "0" + tunnit;
     }
     lahtoaika = tunnit + ":" + minuutitString;
     console.log(lahtoaika);
-    //va1r tunnit = parseInt(lahtoaika, 10);
-    //console.log(numeroina);
     var lahtoaikaISO = lahtopaiva + "T" + lahtoaika + ":00.000Z";
 console.dir(lahtoaikaISO);
     if (lahtoasema && tuloasema) {
