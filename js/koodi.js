@@ -95,7 +95,7 @@ console.dir(lahtoaikaISO);
         https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?startDate=2018-10-04T11:00:00.000Z&limit=15
         xhr1.send(null);
     }
-};
+}
 
 function kasitteleData(tulos) {
     while (hakutulokset.firstChild) {
@@ -108,7 +108,7 @@ function kasitteleData(tulos) {
     if (tulos.code === "TRAIN_NOT_FOUND") {
         var eiYhteyksia = document.createElement("div");
         eiYhteyksia.innerText = "Hakemiesi asemien välilä ei löytynyt suoria yhteyksiä.";
-        eiYhteyksia.classList.add("grid-item")
+        eiYhteyksia.classList.add("grid-item");
         hakutulokset.appendChild(eiYhteyksia);
     } else {
         for (var i = 0; i < tulos.length; ++i) {
@@ -158,6 +158,24 @@ function kasitteleData(tulos) {
             }
         }
     }
+}
+
+// local Storage
+function save(){
+    var arvo = document.getElementById("lahtoasemat").value;
+    localStorage.setItem('text', arvo);
+}
+
+function load(){
+    var tallennettuArvo = localStorage.getItem('text');
+    if (tallennettuArvo) {
+        document.getElementById("lahtoasemat").value = tallennettuArvo;
+    }
+}
+
+function remove(){
+    document.getElementById("lahtoasemat").value = '';
+    localStorage.removeItem('text');
 }
 
 

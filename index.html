@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>Junahaku</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <<link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="js/ajax-utils.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-<body>
+<body onload="load()">
 
 <div class="container">
 
@@ -19,22 +19,27 @@
     <div class="content">
 
 
-        <div class="haku">
+    <div class="haku">
 
-        <p>Date: <input type="date" id="datepricker"></p>
-        <p>Time: <input type="time" id="timepricker"></p>
+        <p>Pvm <br>
+            <input type="date" id="datepricker"></p>
+        <p>Aika<br>
+            <input type="time" id="timepricker"></p>
 
-            <p>Lähtöasema</p>
-            <input type="text" list="lahto" id="lahtoasemat">
-            <datalist id="lahto">
-            </datalist>
+        <p>Lähtöasema</p>
+        <input type="text" list="lahto" id="lahtoasemat"> <br>
+        <input class="button localbutton" type="button" value="Tallenna" onclick="save()"/>
+        <input class="button localbutton" type="button" value="Poista" onclick="remove()"/>
+
+        <datalist id="lahto">
+        </datalist>
 
 
-            <p>Tuloasema</p>
+        <p>Tuloasema</p>
 
-            <input type="text" list="tulo" id="tuloasemat">
-            <datalist id="tulo">
-            </datalist>
+        <input type="text" list="tulo" id="tuloasemat">
+        <datalist id="tulo">
+        </datalist>
 
         <div class="hakupainike">
 
@@ -44,13 +49,13 @@
 
 
 
-        </div>
+    </div>
 
 
-        <div class="grid-container" id="hakutulokset">
-        </div>
+    <div class="grid-container" id="hakutulokset">
+    </div>
 
-        <div id="mapholder"></div>
+    <div id="mapholder">Demo</div>
 
     </div>
 
