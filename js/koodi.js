@@ -64,26 +64,40 @@ function haeJunienAikataulut() {
     tuloasema = document.getElementById("tuloasemat").value;
     var lahtopaiva = document.getElementById("datepricker").value;
     var lahtoaika = document.getElementById("timepricker").value;
-    var lahtoaikaISO = lahtopaiva + "T" + lahtoaika + ":00.000Z";
 
+    // Muutetaan time-kentän palauttaman inputin tunnit numeroiksi ja vähennetään kolmella, jotta ajat näkyvät oikein
+    var tunnitString = lahtoaika.substr(0, 2);
+    var tunnit = parseInt(tunnitString, 10);
+    var minuutitString = lahtoaika.substr(3,2);
+    tunnit -= 3;
+    if (tunnit < 10) {
+        tunnit = "0" + tunnit;
+    }
+    lahtoaika = tunnit + ":" + minuutitString;
+    console.log(lahtoaika);
+    //va1r tunnit = parseInt(lahtoaika, 10);
+    //console.log(numeroina);
+    var lahtoaikaISO = lahtopaiva + "T" + lahtoaika + ":00.000Z";
+console.dir(lahtoaikaISO);
     if (lahtoasema && tuloasema) {
         //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=15 on että listataan 15 tulosta, saa muuttaa
         xhr1.open('GET', baseurl
             + lahtoasema + "/"
-            + tuloasema + '?departure_date='
-            + '&startDate='
-            + lahtoaikaISO + '&endDate=&limit=15', false);
+            + tuloasema
+            + '?startDate='
+            + lahtoaikaISO + '&limit=15', false);
         // TÄSSÄ TULOSTETAAN KONSOLIIN KASAAN PARSITUN URLIN LINKKI
         console.log(baseurl
             + lahtoasema + "/"
-            + tuloasema + '?departure_date='
-            + '&startDate='
-            + lahtoaikaISO + '&endDate=&limit=15');
+            + tuloasema
+            + '?startDate='
+            + lahtoaikaISO + '&limit=15');
+        https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?startDate=2018-10-04T11:00:00.000Z&limit=15
         xhr1.send(null);
     }
 };
 
-function kasitteleData(res) {
+function kasitteleData(tulos) {
     while (hakutulokset.firstChild) {
         hakutulokset.removeChild(hakutulokset.firstChild);
     }
@@ -91,15 +105,15 @@ function kasitteleData(res) {
 
     // Ilmoitetaan käyttäjälle ettei yhteyksiä ole, mikäli tulos palauttaa virheen.
 
-    if (res.code === "TRAIN_NOT_FOUND") {
+    if (tulos.code === "TRAIN_NOT_FOUND") {
         var eiYhteyksia = document.createElement("div");
         eiYhteyksia.innerText = "Hakemiesi asemien välilä ei löytynyt suoria yhteyksiä.";
         eiYhteyksia.classList.add("grid-item")
         hakutulokset.appendChild(eiYhteyksia);
     } else {
-        for (var i = 0; i < res.length; ++i) {
+        for (var i = 0; i < tulos.length; ++i) {
 
-            var juna = res[i];
+            var juna = tulos[i];
             var junatunnus = juna.trainType + juna.trainNumber;
 
 
