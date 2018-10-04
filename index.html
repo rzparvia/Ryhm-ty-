@@ -21,28 +21,21 @@
 
     <div class="haku">
 
-        <p>Date: <input type="text" id="datepicker"></p>
+        <p>Date: <input type="date" id="datepricker"></p>
+        <p>Time: <input type="time" id="timepricker"></p>
 
-        <p>Lähtö</p>
+        <p>Lähtöasema</p>
         <input type="text" list="lahto" id="lahtoasemat">
         <datalist id="lahto">
         </datalist>
 
 
-        <p>Saapuminen</p>
+        <p>Tuloasema</p>
 
         <input type="text" list="tulo" id="tuloasemat">
         <datalist id="tulo">
         </datalist>
 
-        <p>Päivä <br><input type="text" id="pv"></p>
-        <p>Kuukausi<br><input type="text" id="kk"></p>
-        <p>Vuosi<br><input type="text" id="vu"></p>
-
-
-        <p>Tunti<br><input type="text" id="tun"></p>
-        <p>Min<br><input type="text" id="min"></p>
-        <!--asdasdasd-->
         <div class="hakupainike">
 
             <button class="button" type="button" onclick="haeJunienAikataulut()">Hae aikataulu</button>
