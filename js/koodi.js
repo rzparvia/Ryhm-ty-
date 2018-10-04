@@ -73,7 +73,7 @@ function haeJunienAikataulut() {
             + lahtoaikaISO + '&endDate=&limit=15');
         xhr1.send(null);
     }
-};
+}
 
 function filteroiAsemat(tulos) {
     for (var i = 0; i < tulos.length; ++i) {
@@ -107,7 +107,7 @@ function kasitteleData(res) {
     if (res.code === "TRAIN_NOT_FOUND") {
         var eiYhteyksia = document.createElement("div");
         eiYhteyksia.innerText = "Hakemiesi asemien välilä ei löytynyt suoria yhteyksiä.";
-        eiYhteyksia.classList.add("grid-item")
+        eiYhteyksia.classList.add("grid-item");
         hakutulokset.appendChild(eiYhteyksia);
     } else {
         for (var i = 0; i < res.length; ++i) {
@@ -157,6 +157,24 @@ function kasitteleData(res) {
             }
         }
     }
+}
+
+// local Storage
+function save(){
+    var arvo = document.getElementById("lahtoasemat").value;
+    localStorage.setItem('text', arvo);
+}
+
+function load(){
+    var tallennettuArvo = localStorage.getItem('text');
+    if (tallennettuArvo) {
+        document.getElementById("lahtoasemat").value = tallennettuArvo;
+    }
+}
+
+function remove(){
+    document.getElementById("lahtoasemat").value = '';
+    localStorage.removeItem('text');
 }
 
 
