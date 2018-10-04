@@ -19,38 +19,37 @@
     <div class="content">
 
 
-    <div class="haku">
+        <div class="haku">
 
-        <p>Date: <input type="date" id="datepricker"></p>
-        <p>Time: <input type="time" id="timepricker"></p>
+            <p>Date: <input type="date" id="datepricker"></p>
+            <p>Time: <br><input type="time" id="timepricker"></p>
 
-        <p>Lähtöasema</p>
-        <input type="text" list="lahto" id="lahtoasemat">
-        <datalist id="lahto">
-        </datalist>
+            <p>Lähtöasema</p>
+            <input type="text" list="lahto" id="lahtoasemat">
+            <datalist id="lahto">
+            </datalist>
 
 
-        <p>Tuloasema</p>
+            <p>Tuloasema</p>
 
-        <input type="text" list="tulo" id="tuloasemat">
-        <datalist id="tulo">
-        </datalist>
+            <input type="text" list="tulo" id="tuloasemat">
+            <datalist id="tulo">
+            </datalist>
 
-        <div class="hakupainike">
+            <div class="hakupainike">
 
-            <button class="button" type="button" onclick="haeJunienAikataulut()">Hae aikataulu</button>
+                <button class="button" type="button" onclick="haeJunienAikataulut()">Hae aikataulu</button>
+                <button class="button" type="button" onclick="haePaikkatiedot()">Hae kartalta</button>
+            </div>
+
 
         </div>
 
 
+        <div class="grid-container" id="hakutulokset">
+        </div>
 
-    </div>
-
-
-    <div class="grid-container" id="hakutulokset">
-    </div>
-
-    <div id="mapholder">Demo</div>
+        <div id="googleMap" style="width:100%;height:400px;"></div>
 
     </div>
 
@@ -58,27 +57,41 @@
 
 <script src="js/koodi.js"></script>
 <script>
-    var x = document.getElementById("demo");
-    navigator.geolocation.getCurrentPosition(function (loc) {
-            var latlon = loc.coords.latitude + "," + loc.coords.longitude;
+    function myMap() {
+        var mapProp = {
+            center: new google.maps.LatLng(60.177549, 24.833525),
+            zoom: 16,
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        var marker = new google.maps.Marker({
+            position: {lat: 60.177549, lng: 24.833525},
+            map: map,
+            title: 'Hello Academy!'
+        });
 
-            var img_url= "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latlon+"&rankby=distance&type=train_station&key=AIzaSyALL-7LpZ0VywaccFc9kZndHfDZItIVVVI";
-            //var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyBcpL9Qwk65_bC7CUbenuICJAb4DrsRy5c";
+    }
 
-            document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
-        }, function (errordata) {
-        console.log("Virhe:" + errordata.message);
-        },
-        { enableHighAccuracy: true});
+
+    function haePaikkatiedot() {
+
+        navigator.geolocation.getCurrentPosition(function (loc) {
+                var latlon = loc.coords.latitude + "," + loc.coords.longitude;
+            },
+            function (errordata) {
+                console.log("Virhe:" + errordata.message);
+            },
+            {enableHighAccuracy: true});
+    }
 
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv6fKpYdmWdzBOIliZvawTRw_MzQ9FuEM&callback=myMap"></script>
 <script>
 
-    $(document).ready(function(){
+    $(document).ready(function () {
 
-        $( function() {
-            $( "#datepicker" ).datepicker();
-        } );
+        $(function () {
+            $("#datepicker").datepicker();
+        });
 
 
     });
