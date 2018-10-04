@@ -1,7 +1,9 @@
 //Alustetaan tärkeimmät muuttujat
 var baseurl = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
-var lat;
-var lng;
+var lat_lahto;
+var lng_lahto;
+var lat_tulo;
+var lng_tulo;
 var latlng;
 var asemat = [];
 var lyhytkoodit = [];
@@ -70,7 +72,7 @@ function haeJunienAikataulut() {
     // Muutetaan time-kentän palauttaman inputin tunnit numeroiksi ja vähennetään kolmella, jotta ajat näkyvät oikein
     var tunnitString = lahtoaika.substr(0, 2);
     var tunnit = parseInt(tunnitString, 10);
-    var minuutitString = lahtoaika.substr(3,2);
+    var minuutitString = lahtoaika.substr(3, 2);
     tunnit -= 3;
 
     if (tunnit === -1) {
@@ -88,7 +90,7 @@ function haeJunienAikataulut() {
     lahtoaika = tunnit + ":" + minuutitString;
     console.log(lahtoaika);
     var lahtoaikaISO = lahtopaiva + "T" + lahtoaika + ":00.000Z";
-console.dir(lahtoaikaISO);
+    console.dir(lahtoaikaISO);
     if (lahtoasema && tuloasema) {
         //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=15 on että listataan 15 tulosta, saa muuttaa
         xhr1.open('GET', baseurl
@@ -103,7 +105,7 @@ console.dir(lahtoaikaISO);
             + '?startDate='
             + lahtoaikaISO + '&limit=15');
         https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?startDate=2018-10-04T11:00:00.000Z&limit=15
-        xhr1.send(null);
+            xhr1.send(null);
     }
 }
 
@@ -142,14 +144,27 @@ function kasitteleData(tulos) {
             }
             for (var o = 0; o < asemakoord.length; ++o) {
                 if (asemakoord[o].stationShortCode === lahtoasema) {
-                    lat = asemakoord[o].latitude;
-                    lng = asemakoord[o].longitude;
-                    latlng = {lat: lat, lng:lng};
-                    console.log(lat, lng);
-                    console.log(latlng);
-                    map.panTo(latlng);
+                    lat_lahto = asemakoord[o].latitude;
+                    lng_lahto = asemakoord[o].longitude;
+                    latlng_lahto = {lat: lat_lahto, lng: lng_lahto};
+                    console.log(lat_lahto, lng_lahto);
+                    console.log(latlng_lahto);
+                    map.panTo(latlng_lahto);
+                    var marker = new google.maps.Marker({position: latlng_lahto, map: map});
                 }
             }
+            for (var o = 0; o < asemakoord.length; ++o) {
+                if (asemakoord[o].stationShortCode === tuloasema) {
+                    lat_tulo = asemakoord[o].latitude;
+                    lng_tulo = asemakoord[o].longitude;
+                    latlng_tulo = {lat: lat_tulo, lng: lng_tulo};
+                    console.log(lat_tulo, lng_tulo);
+                    console.log(latlng_tulo);
+                    var marker = new google.maps.Marker({position: latlng_tulo, map: map});
+                }
+
+            }
+
             var solut = [];
 
             var junatunnussolu = document.createElement("div");
@@ -181,19 +196,19 @@ function kasitteleData(tulos) {
 }
 
 // local Storage
-function save(){
+function save() {
     var arvo = document.getElementById("lahtoasemat").value;
     localStorage.setItem('text', arvo);
 }
 
-function load(){
+function load() {
     var tallennettuArvo = localStorage.getItem('text');
     if (tallennettuArvo) {
         document.getElementById("lahtoasemat").value = tallennettuArvo;
     }
 }
 
-function remove(){
+function remove() {
     document.getElementById("lahtoasemat").value = '';
     localStorage.removeItem('text');
 }

@@ -8,18 +8,14 @@ function haePaikkatiedot() {
         },
         {enableHighAccuracy: true});
 }
+
 var map;
+
 function myMap() {
     var mapProp = {
         center: new google.maps.LatLng(60.171944, 24.941389),
         zoom: 15,
     };
     map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-    var marker = new google.maps.Marker({
-        position: {lat: 60.171944, lng: 24.941389},
-        map: map,
-        title: 'Hello Academy!'
-    });
-
 }
 
