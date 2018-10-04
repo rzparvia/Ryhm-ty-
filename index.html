@@ -10,7 +10,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
-<body>
+<body onload="load()">
 
 <div class="container">
 
@@ -25,7 +25,10 @@
         <p>Time: <input type="time" id="timepricker"></p>
 
         <p>Lähtöasema</p>
-        <input type="text" list="lahto" id="lahtoasemat">
+        <input type="text" list="lahto" id="lahtoasemat"> <br>
+        <input class="button localbutton" type="button" value="Tallenna" onclick="save()"/>
+        <input class="button localbutton" type="button" value="Poista" onclick="remove()"/>
+
         <datalist id="lahto">
         </datalist>
 
