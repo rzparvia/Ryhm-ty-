@@ -1,6 +1,7 @@
 body {
     background-color: white;
     font-family: 'Roboto', sans-serif;
+    font-weight: 500;
     background-color: rgba(244, 220, 66, 0.3);
     background: url(../img/tausta.jpg);
     background-repeat: no-repeat;
@@ -13,7 +14,7 @@ body {
     margin-right: auto;
     background-color: white;
     padding: 20px;
-    border-radius: 25px;
+    border-radius: 8px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-top: 30px;
 
