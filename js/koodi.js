@@ -58,20 +58,18 @@ function haeJunienAikataulut() {
     var lahtoaika = document.getElementById("timepricker").value;
     var lahtoaikaISO = lahtopaiva+"T"+lahtoaika+":00.000Z";
 
-
-
     if (lahtoasema && tuloasema) {
         //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=15 on että listataan 15 tulosta, saa muuttaa
         xhr1.open('GET', baseurl
             + lahtoasema + "/"
             + tuloasema + '?departure_date='
-            + lahtopaiva + '&startDate='
+            + '&startDate='
             + lahtoaikaISO + '&endDate=&limit=15', false);
         // TÄSSÄ TULOSTETAAN KONSOLIIN KASAAN PARSITUN URLIN LINKKI
         console.log(baseurl
             + lahtoasema + "/"
             + tuloasema + '?departure_date='
-            + lahtopaiva + '&startDate='
+            + '&startDate='
             + lahtoaikaISO + '&endDate=&limit=15');
         xhr1.send(null);
     }
