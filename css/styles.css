@@ -10,6 +10,7 @@ body {
 
 .container{
     width: 70%;
+    min-width: 600px;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
@@ -36,8 +37,12 @@ p {
 .haku{
     margin-bottom: 20px;
     width: 250px;
+}
 
-
+input#datapicker, input#timepicker, input[type="date" i], input[type="time" i]{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: .9em;
 }
 
 .button{
