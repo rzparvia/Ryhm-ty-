@@ -174,6 +174,11 @@ function save(){
     localStorage.setItem('text', arvo);
 }
 
+/*function saveTulo(){
+    var arvo2 = document.getElementById("tuloasemat").value;
+    localStorage.setItem('teksti2', arvo2);
+}*/
+
 function load(){
     var tallennettuArvo = localStorage.getItem('text');
     if (tallennettuArvo) {
