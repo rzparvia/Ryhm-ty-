@@ -77,12 +77,13 @@ function haeJunienAikataulut() {
         + document.getElementById("min").value + ":00.000Z");
 
     if (x && y) {
-        //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=25 on että listataan 25 tulosta, saa muuttaa
+        //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=15 on että listataan 15 tulosta, saa muuttaa
         xhr1.open('GET', baseurl
             + x + "/"
             + y + '?departure_date='
             + depdate + '&startDate='
             + depdateISO + '&endDate=&limit=15', false);
+        // TÄSSÄ TULOSTETAAN KONSOLIIN KASAAN PARSITUN URLIN LINKKI
         console.log(baseurl
             + x + "/"
             + y + '?departure_date='
