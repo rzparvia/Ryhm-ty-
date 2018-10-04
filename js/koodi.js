@@ -1,9 +1,11 @@
 //Alustetaan tärkeimmät muuttujat
 var baseurl = "https://rata.digitraffic.fi/api/v1/live-trains/station/";
-
+var lat;
+var lng;
+var latlng;
 var asemat = [];
 var lyhytkoodit = [];
-
+var asemakoord = [];
 var lahtoasema = "";
 var tuloasema = "";
 var hakutulokset = document.getElementById("hakutulokset");
@@ -13,7 +15,7 @@ haeAsemaData();
 function haeAsemaData() {
     $ajaxUtils.sendGetRequest('https://rata.digitraffic.fi/api/v1/metadata/stations', function (asematulos) {
         filteroiAsemat(asematulos);
-
+        asemakoord = asematulos;
         var valintalista = document.getElementById("lahto");
         for (var j = 0; j < asemat.length; ++j) {
             var lahtoOption = document.createElement("option");
@@ -136,6 +138,16 @@ function kasitteleData(tulos) {
                 if (juna.timeTableRows[ind].stationShortCode === tuloasema) {
                     var haettusaapumisaika = new Date(juna.timeTableRows[ind].scheduledTime).toLocaleTimeString("fi", optiot);
                     break;
+                }
+            }
+            for (var o = 0; o < asemakoord.length; ++o) {
+                if (asemakoord[o].stationShortCode === lahtoasema) {
+                    lat = asemakoord[o].latitude;
+                    lng = asemakoord[o].longitude;
+                    latlng = {lat: lat, lng:lng};
+                    console.log(lat, lng);
+                    console.log(latlng);
+                    map.panTo(latlng);
                 }
             }
             var solut = [];
