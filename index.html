@@ -65,20 +65,34 @@
 
 <script src="js/koodi.js"></script>
 <script>
-    var x = document.getElementById("demo");
-    navigator.geolocation.getCurrentPosition(function (loc) {
-            var latlon = loc.coords.latitude + "," + loc.coords.longitude;
+    function myMap() {
+        var mapProp = {
+            center: new google.maps.LatLng(60.177549, 24.833525),
+            zoom: 16,
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        var marker = new google.maps.Marker({
+            position: {lat: 60.177549, lng: 24.833525},
+            map: map,
+            title: 'Hello Academy!'
+        });
 
-            var img_url= "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+latlon+"&rankby=distance&type=train_station&key=AIzaSyALL-7LpZ0VywaccFc9kZndHfDZItIVVVI";
-            //var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyBcpL9Qwk65_bC7CUbenuICJAb4DrsRy5c";
+    }
 
-            document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
-        }, function (errordata) {
-            console.log("Virhe:" + errordata.message);
-        },
-        { enableHighAccuracy: true});
+
+    function haePaikkatiedot() {
+
+        navigator.geolocation.getCurrentPosition(function (loc) {
+                var latlon = loc.coords.latitude + "," + loc.coords.longitude;
+            },
+            function (errordata) {
+                console.log("Virhe:" + errordata.message);
+            },
+            {enableHighAccuracy: true});
+    }
 
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv6fKpYdmWdzBOIliZvawTRw_MzQ9FuEM&callback=myMap"></script>
 <script>
 
     $(document).ready(function(){
