@@ -83,8 +83,6 @@ function haeJunienAikataulut() {
     }
 };
 
-
-
 function kasitteleData(res) {
     while (hakutulokset.firstChild) {
         hakutulokset.removeChild(hakutulokset.firstChild);
