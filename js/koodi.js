@@ -52,43 +52,25 @@ xhr1.onreadystatechange = function () {
 
 //AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
 function haeJunienAikataulut() {
-    var x = document.getElementById("lahtoasemat").value;
-    var y = document.getElementById("tuloasemat").value;
-    var a = 20;
-    var depY = document.getElementById("vu").value;
-    if (depY < 2000) {
-        depY = a + depY;
-    }
-    var depD = document.getElementById("pv").value;
-    if (depD < 10) {
-        depD = "0" + depD;
-    }
-    var depM = document.getElementById("kk").value;
-    if (depM < 10) {
-        depM = "0" + depM;
-    }
-    var depdate = (depY + "-"
-        + depD + "-"
-        + depM);
-    var depdateISO = (depY + "-"
-        + depD + "-"
-        + depM + "T"
-        + document.getElementById("tun").value + ":"
-        + document.getElementById("min").value + ":00.000Z");
+    var lahtoasema = document.getElementById("lahtoasemat").value;
+    var tuloasema = document.getElementById("tuloasemat").value;
+    var lahtopaiva = document.getElementById("datepricker").value;
+    var lahtoaika = document.getElementById("timepricker").value;
+    var lahtoaikaISO = lahtopaiva+"T"+lahtoaika+":00.000Z";
 
-    if (x && y) {
+    if (lahtoasema && tuloasema) {
         //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=15 on että listataan 15 tulosta, saa muuttaa
         xhr1.open('GET', baseurl
-            + x + "/"
-            + y + '?departure_date='
-            + depdate + '&startDate='
-            + depdateISO + '&endDate=&limit=15', false);
+            + lahtoasema + "/"
+            + tuloasema + '?departure_date='
+            + '&startDate='
+            + lahtoaikaISO + '&endDate=&limit=15', false);
         // TÄSSÄ TULOSTETAAN KONSOLIIN KASAAN PARSITUN URLIN LINKKI
         console.log(baseurl
-            + x + "/"
-            + y + '?departure_date='
-            + depdate + '&startDate='
-            + depdateISO + '&endDate=&limit=15');
+            + lahtoasema + "/"
+            + tuloasema + '?departure_date='
+            + '&startDate='
+            + lahtoaikaISO + '&endDate=&limit=15');
         xhr1.send(null);
     }
 };
