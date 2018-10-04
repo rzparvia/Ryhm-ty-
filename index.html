@@ -19,37 +19,43 @@
     <div class="content">
 
 
-        <div class="haku">
+    <div class="haku">
 
-            <p>Date: <input type="date" id="datepricker"></p>
-            <p>Time: <br><input type="time" id="timepricker"></p>
+        <p>Pvm <br>
+            <input type="date" id="datepricker"></p>
+        <p>Aika<br>
+            <input type="time" id="timepricker"></p>
 
-            <p>Lähtöasema</p>
-            <input type="text" list="lahto" id="lahtoasemat">
-            <datalist id="lahto">
-            </datalist>
+        <p>Lähtöasema</p>
+        <input type="text" list="lahto" id="lahtoasemat"> <br>
+        <input class="button localbutton" type="button" value="Tallenna" onclick="save()"/>
+        <input class="button localbutton" type="button" value="Poista" onclick="remove()"/>
+
+        <datalist id="lahto">
+        </datalist>
 
 
-            <p>Tuloasema</p>
+        <p>Tuloasema</p>
 
-            <input type="text" list="tulo" id="tuloasemat">
-            <datalist id="tulo">
-            </datalist>
+        <input type="text" list="tulo" id="tuloasemat">
+        <datalist id="tulo">
+        </datalist>
 
-            <div class="hakupainike">
+        <div class="hakupainike">
 
                 <button class="button" type="button" onclick="haeJunienAikataulut()">Hae aikataulu</button>
                 <button class="button" type="button" onclick="haePaikkatiedot()">Hae kartalta</button>
             </div>
 
 
-        </div>
+
+    </div>
 
 
-        <div class="grid-container" id="hakutulokset">
-        </div>
+    <div class="grid-container" id="hakutulokset">
+    </div>
 
-        <div id="googleMap" style="width:100%;height:400px;"></div>
+    <div id="mapholder">Demo</div>
 
     </div>
 
@@ -87,11 +93,11 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv6fKpYdmWdzBOIliZvawTRw_MzQ9FuEM&callback=myMap"></script>
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function(){
 
-        $(function () {
-            $("#datepicker").datepicker();
-        });
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
 
 
     });

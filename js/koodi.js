@@ -32,49 +32,6 @@ function haeAsemaData() {
     });
 }
 
-//JUNIEN KELLONAJAT TÄLLÄ PYYNNÖLLÄ
-var xhr1 = new XMLHttpRequest();
-xhr1.onreadystatechange = function () {
-    if (xhr1.readyState === 4) {
-        if (xhr1.status === 200) {
-            // Tehdään jotakin, pyyntö on valmis
-            var tulos = JSON.parse(xhr1.responseText);
-            console.dir(tulos);
-
-
-        } else {
-            alert("Pyyntö epäonnistui");
-            document.getElementById("hae").innerText = "Hae data uudestaan painamalla nappulaa:";
-            document.getElementById("btn").style.visibility = "visible";
-        }
-    }
-};
-
-//AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
-function haeJunienAikataulut() {
-    var lahtoasema = document.getElementById("lahtoasemat").value;
-    var tuloasema = document.getElementById("tuloasemat").value;
-    var lahtopaiva = document.getElementById("datepricker").value;
-    var lahtoaika = document.getElementById("timepricker").value;
-    var lahtoaikaISO = lahtopaiva+"T"+lahtoaika+":00.000Z";
-
-    if (lahtoasema && tuloasema) {
-        //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=15 on että listataan 15 tulosta, saa muuttaa
-        xhr1.open('GET', baseurl
-            + lahtoasema + "/"
-            + tuloasema + '?departure_date='
-            + '&startDate='
-            + lahtoaikaISO + '&endDate=&limit=15', false);
-        // TÄSSÄ TULOSTETAAN KONSOLIIN KASAAN PARSITUN URLIN LINKKI
-        console.log(baseurl
-            + lahtoasema + "/"
-            + tuloasema + '?departure_date='
-            + '&startDate='
-            + lahtoaikaISO + '&endDate=&limit=15');
-        xhr1.send(null);
-    }
-};
-
 function filteroiAsemat(tulos) {
     for (var i = 0; i < tulos.length; ++i) {
         if (tulos[i].passengerTraffic === true) {
@@ -84,19 +41,63 @@ function filteroiAsemat(tulos) {
     }
 }
 
-function haeData() {
+//JUNIEN KELLONAJAT TÄLLÄ PYYNNÖLLÄ
+var xhr1 = new XMLHttpRequest();
+xhr1.onreadystatechange = function () {
+    if (xhr1.readyState === 4) {
+        if (xhr1.status === 200) {
+            // Tehdään jotakin, pyyntö on valmis
+            var tulos = JSON.parse(xhr1.responseText);
+            console.dir(tulos);
+            kasitteleData(tulos);
+
+        } else {
+            alert("Pyyntö epäonnistui");
+
+        }
+    }
+};
+
+//AVAA UUDEN HAUN TIETYLLE PÄIVÄMÄÄRÄLLE JOSTA SAADAAN LÄHTEVIEN JUNIEN AIKATAULUT
+function haeJunienAikataulut() {
     lahtoasema = document.getElementById("lahtoasemat").value;
     tuloasema = document.getElementById("tuloasemat").value;
-    var hakuURL = baseurl + lahtoasema + "/" + tuloasema;
+    var lahtopaiva = document.getElementById("datepricker").value;
+    var lahtoaika = document.getElementById("timepricker").value;
 
-    $ajaxUtils.sendGetRequest(hakuURL, function (res) {
-        kasitteleData(res);
-    });
+    // Muutetaan time-kentän palauttaman inputin tunnit numeroiksi ja vähennetään kolmella, jotta ajat näkyvät oikein
+    var tunnitString = lahtoaika.substr(0, 2);
+    var tunnit = parseInt(tunnitString, 10);
+    var minuutitString = lahtoaika.substr(3,2);
+    tunnit -= 3;
+    if (tunnit < 10) {
+        tunnit = "0" + tunnit;
+    }
+    lahtoaika = tunnit + ":" + minuutitString;
+    console.log(lahtoaika);
+    //va1r tunnit = parseInt(lahtoaika, 10);
+    //console.log(numeroina);
+    var lahtoaikaISO = lahtopaiva + "T" + lahtoaika + ":00.000Z";
+console.dir(lahtoaikaISO);
+    if (lahtoasema && tuloasema) {
+        //tämä pätkä määrittelee miltä aikaväliltä junat haetaan, limit=15 on että listataan 15 tulosta, saa muuttaa
+        xhr1.open('GET', baseurl
+            + lahtoasema + "/"
+            + tuloasema
+            + '?startDate='
+            + lahtoaikaISO + '&limit=15', false);
+        // TÄSSÄ TULOSTETAAN KONSOLIIN KASAAN PARSITUN URLIN LINKKI
+        console.log(baseurl
+            + lahtoasema + "/"
+            + tuloasema
+            + '?startDate='
+            + lahtoaikaISO + '&limit=15');
+        https://rata.digitraffic.fi/api/v1/live-trains/station/HKI/TPE?startDate=2018-10-04T11:00:00.000Z&limit=15
+        xhr1.send(null);
+    }
 }
 
-
-
-function kasitteleData(res) {
+function kasitteleData(tulos) {
     while (hakutulokset.firstChild) {
         hakutulokset.removeChild(hakutulokset.firstChild);
     }
@@ -104,15 +105,15 @@ function kasitteleData(res) {
 
     // Ilmoitetaan käyttäjälle ettei yhteyksiä ole, mikäli tulos palauttaa virheen.
 
-    if (res.code === "TRAIN_NOT_FOUND") {
+    if (tulos.code === "TRAIN_NOT_FOUND") {
         var eiYhteyksia = document.createElement("div");
         eiYhteyksia.innerText = "Hakemiesi asemien välilä ei löytynyt suoria yhteyksiä.";
-        eiYhteyksia.classList.add("grid-item")
+        eiYhteyksia.classList.add("grid-item");
         hakutulokset.appendChild(eiYhteyksia);
     } else {
-        for (var i = 0; i < res.length; ++i) {
+        for (var i = 0; i < tulos.length; ++i) {
 
-            var juna = res[i];
+            var juna = tulos[i];
             var junatunnus = juna.trainType + juna.trainNumber;
 
 
@@ -157,6 +158,24 @@ function kasitteleData(res) {
             }
         }
     }
+}
+
+// local Storage
+function save(){
+    var arvo = document.getElementById("lahtoasemat").value;
+    localStorage.setItem('text', arvo);
+}
+
+function load(){
+    var tallennettuArvo = localStorage.getItem('text');
+    if (tallennettuArvo) {
+        document.getElementById("lahtoasemat").value = tallennettuArvo;
+    }
+}
+
+function remove(){
+    document.getElementById("lahtoasemat").value = '';
+    localStorage.removeItem('text');
 }
 
 
